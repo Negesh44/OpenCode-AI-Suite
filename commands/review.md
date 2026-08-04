@@ -1,165 +1,139 @@
+---
+description: Perform a comprehensive production readiness review using the engineering team.
+---
+
 # /review
 
-## Purpose
+You are responsible for determining whether software is ready for production.
 
-Perform a complete production-ready code review.
+Never assume code is correct.
 
----
-
-## Workflow
-
-1. Analyze changed files.
-2. Understand feature purpose.
-3. Review architecture.
-4. Review code quality.
-5. Review security.
-6. Review performance.
-7. Review database.
-8. Review frontend.
-9. Review backend.
-10. Review testing.
-11. Generate final report.
+Always verify.
 
 ---
 
-## Review Categories
+## Step 1 — Scope
 
-### Architecture
+Determine
+
+- Project
+- Feature
+- Pull Request
+- Module
+- Branch
+
+---
+
+## Step 2 — Assign Reviewers
+
+Assign only the required agents.
+
+Possible agents
+
+- Reviewer
+- Security
+- Performance
+- Tester
+- Documentation
+
+---
+
+## Step 3 — Architecture Review
+
+Review
 
 - SOLID
 - DRY
 - KISS
-- Layer Separation
 - Clean Architecture
+- Folder Structure
+- Naming
+- Code Reuse
 
 ---
 
-### Backend
+## Step 4 — Security Review
 
-Review
+Verify
 
-- Controllers
-- Services
-- Repositories
-- DTOs
-- Validation
-- Exception Handling
-- Transactions
-
----
-
-### Frontend
-
-Review
-
-- Components
-- Hooks
-- State
-- Responsiveness
-- Accessibility
-- Reusability
-
----
-
-### Database
-
-Check
-
-- Indexes
-- Relationships
-- Constraints
-- Query Performance
-
----
-
-### Security
-
-Review
-
-- JWT
 - Authentication
 - Authorization
+- Input Validation
 - SQL Injection
 - XSS
 - CSRF
 - Secrets
+- Dependency Vulnerabilities
 
 ---
 
-### Performance
+## Step 5 — Performance Review
 
-Review
+Verify
 
-- API Speed
-- Rendering
-- Queries
-- Bundle Size
+- Slow Queries
+- N+1 Problems
+- API Response Time
 - Memory Usage
+- CPU Usage
+- Bundle Size
+- Caching
+- Lazy Loading
 
 ---
 
-## Scorecard
+## Step 6 — Testing Review
 
-Architecture
+Verify
 
-__/10
-
-Security
-
-__/10
-
-Performance
-
-__/10
-
-Maintainability
-
-__/10
-
-Readability
-
-__/10
-
-Testing
-
-__/10
-
-Overall
-
-__/10
+- Unit Tests
+- Integration Tests
+- End-to-End Tests
+- Edge Cases
+- Error Handling
 
 ---
 
-## Final Verdict
+## Step 7 — Documentation Review
 
-Choose one
+Verify
 
-✅ Ready for Production
+- README
+- API Docs
+- Changelog
+- Deployment Guide
+- Environment Variables
+
+---
+
+## Output
+
+Always produce
+
+# Executive Summary
+
+# Architecture Score
+
+# Security Score
+
+# Performance Score
+
+# Testing Score
+
+# Documentation Score
+
+# Production Risks
+
+# Recommended Improvements
+
+# Final Verdict
+
+Choose exactly one
+
+✅ Production Ready
 
 ⚠ Ready with Minor Changes
 
 ❌ Requires Major Changes
 
 🚫 Reject
-
----
-
-## Output
-
-# Executive Summary
-
-# Issues Found
-
-# Recommended Fixes
-
-# Security Findings
-
-# Performance Findings
-
-# Final Score
-
----
-
-## Final Rule
-
-Never approve code that you wouldn't deploy to production yourself.

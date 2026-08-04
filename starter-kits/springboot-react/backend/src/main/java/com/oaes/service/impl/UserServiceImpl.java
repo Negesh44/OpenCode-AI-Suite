@@ -2,11 +2,13 @@ package com.oaes.service.impl;
 
 import com.oaes.dto.response.UserResponse;
 import com.oaes.entity.User;
+import com.oaes.exception.ResourceNotFoundException;
 import com.oaes.mapper.UserMapper;
 import com.oaes.repository.UserRepository;
 import com.oaes.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.oaes.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -30,7 +32,8 @@ public class UserServiceImpl implements UserService {
     public UserResponse findById(Long id) {
 
         User user = repository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() ->
+        new ResourceNotFoundException("User not found"));
 
         return UserMapper.toResponse(user);
 

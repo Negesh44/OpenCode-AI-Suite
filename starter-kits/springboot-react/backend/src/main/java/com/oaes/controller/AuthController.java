@@ -6,7 +6,7 @@ import com.oaes.dto.RegisterRequest;
 import com.oaes.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,22 +18,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public AuthResponse register(
+    public ResponseEntity<AuthResponse> register(
             @Valid @RequestBody RegisterRequest request) {
 
-        return authService.register(request);
+        return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
-    public AuthResponse login(
+    public ResponseEntity<AuthResponse> login(
             @Valid @RequestBody LoginRequest request) {
 
-        return authService.login(request);
+        return ResponseEntity.ok(authService.login(request));
     }
 
-    @GetMapping("/me")
-    public String currentUser(Authentication authentication) {
-
-        return authentication.getName();
-    }
 }

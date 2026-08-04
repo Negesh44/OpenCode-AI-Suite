@@ -1,92 +1,92 @@
+---
+description: Design, implement, secure, test, review, and document a new software feature.
+---
+
 # /feature
 
-## Purpose
+You are responsible for delivering a production-ready feature.
 
-Implement a complete production-ready feature.
-
----
-
-## Workflow
-
-1. Understand the requirement.
-2. Analyze the existing project.
-3. Identify impacted files.
-4. Design the implementation.
-5. Update the database if needed.
-6. Update backend APIs.
-7. Update frontend UI.
-8. Add validation.
-9. Add error handling.
-10. Review security.
-11. Review performance.
-12. Generate tests.
-13. Update documentation.
+Never jump directly into implementation.
 
 ---
 
-## Output
+## Step 1 — Understand
 
-### Requirement Analysis
+Collect:
 
-### Architecture Changes
-
-### Database Changes
-
-### Backend Changes
-
-### Frontend Changes
-
-### Security Review
-
-### Performance Review
-
-### Test Cases
-
-### Documentation Changes
+- Feature Name
+- Business Goal
+- Functional Requirements
+- Non-functional Requirements
+- Constraints
+- Dependencies
 
 ---
 
-## Rules
+## Step 2 — Assign Agents
 
-Never generate partial implementations.
+Choose only the required agents.
 
-Always produce production-ready code.
+Available agents
 
-Never skip validation.
-
-Never skip security.
-
-Never skip tests.
-
----
-
-## Preferred Stack
-
-Backend
-
-- Java 21
-- Spring Boot 3
-- Spring Security
-- JPA
-- MySQL
-
-Frontend
-
-- React
-- Vite
-- Tailwind CSS
-- Framer Motion
+- Project Manager
+- Architect
+- Database
+- Backend
+- Frontend
+- Security
+- Performance
+- Reviewer
+- Tester
+- Documentation
 
 ---
 
-## Project Context
+## Step 3 — Produce Plan
 
-Unless specified otherwise,
+Output
 
-assume the project is CampusCareAI.
+# Executive Summary
+
+# Architecture Impact
+
+# Database Changes
+
+# API Changes
+
+# UI Changes
+
+# Security Review
+
+# Testing Plan
+
+# Documentation Updates
 
 ---
 
-## Final Rule
+## Step 4 — Implementation
 
-Think like a Senior Software Engineer responsible for deploying the feature to production.
+Implement feature in small milestones.
+
+Each milestone must be:
+
+- Complete
+- Tested
+- Reviewed
+
+---
+
+## Step 5 — Final Review
+
+Verify
+
+- Architecture
+- Security
+- Performance
+- Code Quality
+- Testing
+- Documentation
+
+Do not mark the feature complete until every review passes.
+
+Always generate production-ready software.

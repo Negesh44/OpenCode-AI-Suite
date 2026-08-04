@@ -1,0 +1,63 @@
+version: 1.0
+
+commands:
+
+  - id: feature
+    file: commands/feature.md
+    workflow: feature-workflow
+    description: Implement a new software feature
+
+  - id: fix
+    file: commands/fix.md
+    workflow: bug-fix
+    description: Diagnose and resolve software defects
+
+  - id: review
+    file: commands/review.md
+    workflow: review-workflow
+    description: Perform production readiness review
+
+  - id: release
+    file: commands/release.md
+    workflow: release-workflow
+    description: Prepare software for production release
+
+  - id: deploy
+    file: commands/deploy.md
+    workflow: deployment-workflow
+    description: Deploy application
+
+  - id: refactor
+    file: commands/refactor.md
+    workflow: refactor-workflow
+    description: Improve existing code
+
+  - id: project
+    file: commands/new-project.md
+    workflow: project-workflow
+    description: Create a new software project
+
+  - id: api
+    file: commands/api.md
+    workflow: feature-workflow
+    description: Design REST APIs
+
+  - id: crud
+    file: commands/crud.md
+    workflow: feature-workflow
+    description: Generate CRUD operations
+
+  - id: optimize
+    file: commands/optimize.md
+    workflow: refactor-workflow
+    description: Optimize application performance
+
+  - id: design
+    file: commands/design.md
+    workflow: project-workflow
+    description: Design software architecture
+
+  - id: security
+    file: commands/security.md
+    workflow: review-workflow
+    description: Perform security review

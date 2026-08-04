@@ -1,77 +1,58 @@
-# Security Knowledge Base v1.0
+# Security Knowledge Base
 
-## Security Principles
+## Objective
 
-Always design software assuming it will be attacked.
+Provide security best practices for designing, developing, deploying, and maintaining secure software systems.
 
-Security must be built into every layer.
+---
+
+# Security Principles
+
+Always follow
+
+- Zero Trust
+- Least Privilege
+- Defense in Depth
+- Secure by Default
+- Fail Securely
+- Principle of Least Knowledge
 
 ---
 
 # Authentication
 
-Supported
+Use
 
 - JWT
 - OAuth2
-- Google Login
-- Microsoft Login
-- Multi-Factor Authentication
+- OpenID Connect
+- Multi-Factor Authentication (MFA)
+
+Always
+
+- Hash passwords with BCrypt or Argon2
+- Expire tokens
+- Rotate refresh tokens
+- Lock accounts after repeated failed logins
 
 Never
 
-- Store plain text passwords
-- Disable authentication
-- Use weak secrets
+- Store plaintext passwords
+- Hardcode credentials
+- Store secrets in source code
 
 ---
 
 # Authorization
 
-Always implement
-
-- RBAC
-- Least Privilege
-- Resource Ownership
-- Permission Validation
-
-Never trust client-side roles.
-
----
-
-# Password Security
-
 Always
 
-- BCrypt
-- Argon2
-- Minimum 12 Characters
-- Password Complexity
-- Password Reset Tokens
+- Role-Based Access Control (RBAC)
+- Principle of Least Privilege
+- Verify permissions on every protected endpoint
+- Perform server-side authorization
 
-Never
-
-- MD5
-- SHA1
-- Plain Text
-- Reversible Encryption
-
----
-
-# OWASP Top 10
-
-Always review
-
-- Broken Access Control
-- Cryptographic Failures
-- Injection
-- Insecure Design
-- Security Misconfiguration
-- Vulnerable Components
-- Authentication Failures
-- Data Integrity Failures
-- Logging Failures
-- SSRF
+Never rely only on frontend checks.
 
 ---
 
@@ -81,64 +62,31 @@ Validate
 
 - Request Body
 - Query Parameters
-- Headers
-- Cookies
+- Path Variables
 - Uploaded Files
 
-Reject invalid input immediately.
-
----
-
-# SQL Injection
-
 Always
 
-- Prepared Statements
-- Parameterized Queries
-- ORM
-- Input Validation
-
-Never
-
-- String Concatenation
-- Dynamic SQL
+- Validate server-side
+- Sanitize user input
+- Reject unexpected fields
 
 ---
 
-# XSS
+# OWASP Top 10
 
-Always
+Protect against
 
-- Escape Output
-- Sanitize HTML
-- Validate Input
-- Content Security Policy
-
-Never trust browser input.
-
----
-
-# CSRF
-
-Enable CSRF protection where appropriate.
-
-For stateless JWT APIs, disable only with proper justification.
-
----
-
-# JWT
-
-Always
-
-- Expiration
-- Refresh Tokens
-- Strong Secret
-- HTTPS
-
-Never
-
-- Long-lived tokens
-- Store secrets in source code
+- Broken Access Control
+- Cryptographic Failures
+- Injection Attacks
+- Insecure Design
+- Security Misconfiguration
+- Vulnerable Dependencies
+- Authentication Failures
+- Software Integrity Failures
+- Logging Failures
+- SSRF
 
 ---
 
@@ -150,102 +98,99 @@ Always
 - Authentication
 - Authorization
 - Rate Limiting
-- Input Validation
-- Request Size Limits
+- Request Validation
+- Response Validation
+- API Versioning
+
+Return only necessary data.
 
 ---
 
-# File Upload
+# Database Security
 
 Always
 
-- Validate MIME Type
-- Validate Extension
-- Limit Size
-- Rename Files
-- Virus Scan
-- Store Outside Public Folder
+- Prepared Statements
+- Parameterized Queries
+- Encryption at Rest
+- Regular Backups
+- Least Privilege Database Users
+
+Never concatenate SQL queries.
 
 ---
 
-# Docker Security
+# File Upload Security
 
 Always
 
-- Non-root User
-- Small Images
-- Secret Management
-- Image Scanning
-- Read-only Filesystem where possible
+- Validate file type
+- Validate file size
+- Scan uploaded files when applicable
+- Rename uploaded files
+- Store outside the web root when possible
 
 ---
 
-# Cloud Security
+# Secrets Management
 
-Review
+Store secrets in
 
-- IAM
-- Security Groups
-- Firewalls
-- Secrets
-- Encryption
-- Logging
+- Environment Variables
+- Secret Managers
+- Vault Services
+
+Never
+
+- Commit API Keys
+- Commit Passwords
+- Commit Private Keys
 
 ---
 
 # Logging
 
-Never log
-
-- Passwords
-- JWT
-- API Keys
-- Secrets
-
-Always log
+Log
 
 - Authentication Events
 - Authorization Failures
-- Critical Errors
+- Errors
+- Security Events
+
+Never log
+
+- Passwords
+- JWT Tokens
+- API Keys
+- Credit Card Numbers
 
 ---
 
-# Incident Response
+# Dependency Management
 
-Always prepare
+Regularly
 
-- Backups
-- Restore Plan
-- Audit Logs
-- Monitoring
-- Alerting
+- Update dependencies
+- Scan for vulnerabilities
+- Remove unused packages
 
 ---
 
-# Security Checklist
+# Production Checklist
 
-✔ Authentication
+Verify
 
-✔ Authorization
-
-✔ Validation
-
-✔ Encryption
-
-✔ Logging
-
-✔ HTTPS
-
-✔ Secrets
-
-✔ Backups
-
-✔ Monitoring
+- HTTPS Enabled
+- Secure Headers
+- CORS Configured
+- Rate Limiting Enabled
+- Logging Enabled
+- Monitoring Enabled
+- Secrets Protected
+- Backup Strategy
 
 ---
 
 # Final Rule
 
-Security is everyone's responsibility.
-
-Build secure software by default.
+Security is a continuous process. Every feature, review, deployment, and maintenance activity must consider security from design through production.

@@ -1,121 +1,84 @@
-# Spring Boot Knowledge Base v1.0
+# Spring Boot Knowledge Base
 
-## Preferred Stack
+## Objective
+
+Provide best practices for building secure, scalable, maintainable, and production-ready Spring Boot applications.
+
+---
+
+# Technology Stack
 
 - Java 21+
 - Spring Boot 3+
-- Maven
 - Spring Security
 - Spring Data JPA
-- MySQL
-- JWT
-- Lombok
-- Validation
-- Swagger
+- Hibernate
+- Maven
+- Gradle
+- REST APIs
+- Docker
 
 ---
 
 # Project Structure
 
+Prefer
+
 src/main/java
 
-controller/
-
-service/
-
-repository/
-
-entity/
-
-dto/
-
-mapper/
-
-config/
-
-security/
-
-exception/
-
-util/
-
-Never violate this structure.
+- config
+- controller
+- service
+- repository
+- entity
+- dto
+- mapper
+- security
+- exception
+- util
 
 ---
 
-# Controller Rules
+# Architecture
 
-Responsibilities
+Always follow
 
-- Receive HTTP requests
-- Validate input
-- Return ResponseEntity
-- Call Services
-
-Never
-
-- Business Logic
-- SQL
-- Complex Calculations
+- Layered Architecture
+- Clean Architecture where appropriate
+- Constructor Injection
+- SOLID Principles
+- Repository Pattern
+- DTO Pattern
 
 ---
 
-# Service Rules
+# REST API
 
-Responsibilities
+Always
 
-- Business Logic
-- Transactions
-- Validation
-- Call Repository
+- Version APIs
+- Validate requests
+- Return consistent responses
+- Use correct HTTP status codes
+- Handle exceptions globally
 
 ---
 
-# Repository Rules
-
-Use
-
-Spring Data JPA
+# Database
 
 Prefer
 
-Derived Query Methods
+- Spring Data JPA
+- Hibernate
+- Flyway or Liquibase
+- Transactions
+- Proper Indexing
+- Pagination
 
-JPQL
+Avoid
 
-Native Query only if required.
-
----
-
-# DTO Rules
-
-Always create
-
-Request DTO
-
-Response DTO
-
-Never expose Entity.
-
----
-
-# Validation
-
-Use
-
-@Valid
-
-@NotBlank
-
-@NotNull
-
-@Size
-
-@Email
-
-@Pattern
-
-Never trust client data.
+- N+1 Queries
+- Unnecessary eager loading
 
 ---
 
@@ -123,158 +86,55 @@ Never trust client data.
 
 Always
 
-JWT
-
-BCrypt
-
-Role Based Access
-
-HTTPS
-
-Constructor Injection
+- JWT or OAuth2
+- BCrypt Password Hashing
+- Method Security
+- Input Validation
+- CORS Configuration
+- HTTPS
 
 Never
 
-Hardcode Secrets
-
-Store Passwords
-
-Disable Validation
-
----
-
-# Exception Handling
-
-Always use
-
-@RestControllerAdvice
-
-Global Exception Handler
-
-Never
-
-try-catch in every controller.
-
----
-
-# API Standards
-
-Good
-
-/api/users
-
-/api/complaints
-
-/api/dashboard
-
-Bad
-
-/getUser
-
-/deleteComplaint
-
----
-
-# Database
-
-Always
-
-Indexes
-
-Relationships
-
-Foreign Keys
-
-Transactions
-
-Soft Delete where required
-
-Audit Fields
+- Store plaintext passwords
+- Expose secrets
+- Trust client input
 
 ---
 
 # Performance
 
-Always
+Optimize
 
-Pagination
-
-Caching
-
-Batch Operations
-
-Lazy Loading
-
-Avoid N+1
-
----
-
-# Logging
-
-Log
-
-Errors
-
-Warnings
-
-Business Events
-
-Never
-
-Passwords
-
-JWT
-
-Secrets
+- Database Queries
+- Connection Pooling
+- Caching
+- Async Processing
+- Batch Operations
 
 ---
 
 # Testing
 
-Write
+Include
 
-Unit Tests
-
-Integration Tests
-
-MockMvc Tests
-
-Repository Tests
+- Unit Tests
+- Integration Tests
+- Controller Tests
+- Repository Tests
 
 ---
 
-# Deployment
+# Documentation
 
-Docker
+Every project should include
 
-GitHub Actions
-
-Nginx
-
-Linux
-
-Environment Variables
-
----
-
-# Code Quality
-
-Always
-
-SOLID
-
-DRY
-
-Clean Code
-
-Reusable Services
-
-Small Methods
-
-Meaningful Naming
+- README
+- API Documentation
+- Environment Variables
+- Deployment Guide
 
 ---
 
 # Final Rule
 
-Every Spring Boot application should be production-ready before deployment.
+Write production-ready Spring Boot applications that prioritize maintainability, security, performance, and simplicity.

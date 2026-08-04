@@ -1,0 +1,13 @@
+version: 1.0
+
+standards:
+
+  - api-standard
+  - code-style
+  - commit-standard
+  - documentation-standard
+  - git-workflow
+  - naming-conventions
+  - project-structure
+  - security-standard
+  - testing-standard

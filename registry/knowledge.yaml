@@ -1,0 +1,86 @@
+version: 1.0
+
+knowledge:
+
+  - id: clean-code
+    file: knowledge/clean-code.md
+    used_by:
+      - architect
+      - backend
+      - frontend
+      - reviewer
+
+  - id: system-design
+    file: knowledge/system-design.md
+    used_by:
+      - architect
+      - project-manager
+
+  - id: springboot
+    file: knowledge/springboot.md
+    used_by:
+      - backend
+
+  - id: react
+    file: knowledge/react.md
+    used_by:
+      - frontend
+      - uiux
+
+  - id: java
+    file: knowledge/java.md
+    used_by:
+      - backend
+
+  - id: security
+    file: knowledge/security.md
+    used_by:
+      - security
+      - backend
+      - frontend
+      - reviewer
+      - devops
+
+  - id: docker
+    file: knowledge/docker.md
+    used_by:
+      - devops
+      - backend
+
+  - id: testing
+    file: knowledge/testing.md
+    used_by:
+      - tester
+      - reviewer
+
+  - id: mysql
+    file: knowledge/mysql.md
+    used_by:
+      - database
+      - backend
+
+  - id: postgres
+    file: knowledge/postgresql.md
+    used_by:
+      - database
+
+  - id: git
+    file: knowledge/git.md
+    used_by:
+      - project-manager
+      - devops
+
+  - id: aws
+    file: knowledge/aws.md
+    used_by:
+      - devops
+
+  - id: architecture
+    file: knowledge/architecture.md
+    used_by:
+      - architect
+
+  - id: prompt-engineering
+    file: knowledge/prompt-engineering.md
+    used_by:
+      - ai-engineer

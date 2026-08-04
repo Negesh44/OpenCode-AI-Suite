@@ -1,0 +1,78 @@
+version: 1.0
+
+agents:
+
+  - id: ai-engineer
+    name: AI Engineer
+    file: agents/ai-engineer.md
+    category: engineering
+
+  - id: architect
+    name: Software Architect
+    file: agents/architect.md
+    category: architecture
+
+  - id: backend
+    name: Backend Engineer
+    file: agents/backend.md
+    category: backend
+
+  - id: frontend
+    name: Frontend Engineer
+    file: agents/frontend.md
+    category: frontend
+
+  - id: database
+    name: Database Engineer
+    file: agents/database.md
+    category: database
+
+  - id: security
+    name: Security Engineer
+    file: agents/security.md
+    category: security
+
+  - id: devops
+    name: DevOps Engineer
+    file: agents/devops.md
+    category: devops
+
+  - id: reviewer
+    name: Code Reviewer
+    file: agents/reviewer.md
+    category: review
+
+  - id: debugger
+    name: Debugger
+    file: agents/debugger.md
+    category: debugging
+
+  - id: tester
+    name: Test Engineer
+    file: agents/tester.md
+    category: testing
+
+  - id: performance
+    name: Performance Engineer
+    file: agents/performance.md
+    category: performance
+
+  - id: documentation
+    name: Documentation Engineer
+    file: agents/documentation.md
+    category: documentation
+
+  - id: project-manager
+    name: Project Manager
+    file: agents/project-manager.md
+    category: management
+
+  - id: uiux
+    name: UI/UX Designer
+    file: agents/uiux.md
+    category: design
+
+  - id: dsa-coach
+    name: DSA Coach
+    file: agents/dsa-coach.md
+    category: learning

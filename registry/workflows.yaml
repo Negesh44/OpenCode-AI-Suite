@@ -1,0 +1,87 @@
+version: 1.0
+
+workflows:
+
+  - id: project-workflow
+    file: workflows/project-workflow.md
+    agents:
+      - project-manager
+      - architect
+      - uiux
+      - database
+      - backend
+      - frontend
+      - security
+      - performance
+      - reviewer
+      - tester
+      - documentation
+      - devops
+
+  - id: feature-workflow
+    file: workflows/feature-workflow.md
+    agents:
+      - project-manager
+      - architect
+      - backend
+      - frontend
+      - database
+      - security
+      - performance
+      - reviewer
+      - tester
+      - documentation
+
+  - id: bug-fix
+    file: workflows/bug-fix.md
+    agents:
+      - debugger
+      - backend
+      - frontend
+      - database
+      - security
+      - reviewer
+      - tester
+      - documentation
+
+  - id: review-workflow
+    file: workflows/review-workflow.md
+    agents:
+      - reviewer
+      - security
+      - performance
+      - tester
+      - documentation
+
+  - id: release-workflow
+    file: workflows/release-workflow.md
+    agents:
+      - project-manager
+      - reviewer
+      - tester
+      - security
+      - performance
+      - documentation
+      - devops
+
+  - id: deployment-workflow
+    file: workflows/deployment-workflow.md
+    agents:
+      - devops
+      - security
+      - database
+      - tester
+      - performance
+      - documentation
+
+  - id: refactor-workflow
+    file: workflows/refactor-workflow.md
+    agents:
+      - architect
+      - backend
+      - frontend
+      - database
+      - reviewer
+      - performance
+      - tester
+      - documentation

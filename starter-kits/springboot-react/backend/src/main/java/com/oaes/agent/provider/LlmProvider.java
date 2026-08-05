@@ -1,10 +1,12 @@
 package com.oaes.agent.provider;
 
-import com.oaes.agent.dto.ChatRequest;
 import com.oaes.agent.dto.ChatResponse;
+import com.oaes.agent.model.OllamaMessage;
+
+import java.util.List;
 
 public interface LlmProvider {
 
-    ChatResponse chat(ChatRequest request);
+    ChatResponse chat(List<OllamaMessage> messages);
 
 }

@@ -17,6 +17,9 @@ public class AgentController {
 
     @PostMapping("/chat")
     public ResponseEntity<ChatResponse> chat(@RequestBody ChatRequest request) {
-        return ResponseEntity.ok(agentService.chat(request));
+
+        ChatResponse response = agentService.chat(request);
+
+        return ResponseEntity.ok(response);
     }
 }

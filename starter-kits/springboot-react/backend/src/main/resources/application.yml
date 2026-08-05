@@ -34,7 +34,6 @@ jwt:
   expiration: 86400000
 
 springdoc:
-
   api-docs:
     path: /v3/api-docs
 
@@ -42,13 +41,12 @@ springdoc:
     path: /swagger-ui.html
 
 logging:
-
   level:
-
     root: INFO
-
     org.springframework.security: INFO
-
     org.hibernate.SQL: DEBUG
-
     com.oaes: DEBUG
+
+ollama:
+  url: http://localhost:11434/api/chat
+  model: qwen3:8b

@@ -27,18 +27,20 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
 
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(
-        "/api/auth/**",
-        "/api/agent/**",
-        "/swagger-ui/**",
-        "/v3/api-docs/**",
-        "/swagger-ui.html",
-        "/actuator/health"
-).permitAll()
+                                "/api/auth/**",
+                                "/api/agent/**",
+                                "/api/conversations/**",
+                                "/api/planner/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/actuator/health"
+                        ).permitAll()
 
                         .anyRequest().authenticated()
                 )
@@ -53,7 +55,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 

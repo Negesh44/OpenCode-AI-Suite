@@ -1,5 +1,6 @@
 package com.oaes.conversation.entity;
 
+import com.oaes.workspace.entity.Workspace;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,10 @@ public class Conversation {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workspace_id", nullable = false)
+    private Workspace workspace;
 
     @Column(nullable = false)
     private String title;

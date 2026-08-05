@@ -36,6 +36,7 @@ public class SecurityConfig {
                                 "/api/agent/**",
                                 "/api/conversations/**",
                                 "/api/planner/**",
+                                "/api/workspaces/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",

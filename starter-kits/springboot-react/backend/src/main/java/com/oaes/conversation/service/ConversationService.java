@@ -7,6 +7,8 @@ import com.oaes.conversation.entity.Conversation;
 import com.oaes.conversation.entity.Message;
 import com.oaes.conversation.repository.ConversationRepository;
 import com.oaes.conversation.repository.MessageRepository;
+import com.oaes.workspace.entity.Workspace;
+import com.oaes.workspace.repository.WorkspaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,18 @@ public class ConversationService {
 
     private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
+    private final WorkspaceRepository workspaceRepository;
 
-    public ConversationResponse createConversation(ConversationRequest request) {
+    public ConversationResponse createConversation(
+            ConversationRequest request) {
+
+        Workspace workspace = workspaceRepository.findById(
+                request.getWorkspaceId()
+        ).orElseThrow(() ->
+                new RuntimeException("Workspace not found"));
 
         Conversation conversation = Conversation.builder()
+                .workspace(workspace)
                 .title(request.getTitle())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -42,7 +52,8 @@ public class ConversationService {
 
         Conversation conversation = conversationRepository.findById(
                 java.util.UUID.fromString(conversationId)
-        ).orElseThrow(() -> new RuntimeException("Conversation not found"));
+        ).orElseThrow(() ->
+                new RuntimeException("Conversation not found"));
 
         return messageRepository
                 .findByConversationOrderByCreatedAtAsc(conversation)

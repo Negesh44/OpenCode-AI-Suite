@@ -1,12 +1,12 @@
-package com.oaes.agent.planner.dto;
+package com.oaes.planner.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class PlannerRequest {
 
     private String goal;

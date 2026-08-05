@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,6 +15,10 @@ public class ToolResponse {
 
     private boolean success;
 
-    private String result;
+    private String message;
+
+    private Object data;
+
+    private LocalDateTime timestamp;
 
 }

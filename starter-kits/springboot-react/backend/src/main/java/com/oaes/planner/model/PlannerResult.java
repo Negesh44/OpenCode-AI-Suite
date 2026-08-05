@@ -1,17 +1,20 @@
-package com.oaes.agent.planner.dto;
+package com.oaes.planner.model;
 
-import com.oaes.agent.planner.model.ExecutionPlan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlannerResponse {
+public class PlannerResult {
 
-    private ExecutionPlan plan;
+    private String goal;
+
+    private List<PlannerTask> tasks;
 
 }

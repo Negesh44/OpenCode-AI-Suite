@@ -37,7 +37,9 @@ public class SecurityConfig {
                                 "/api/conversations/**",
                                 "/api/planner/**",
                                 "/api/workspaces/**",
+                                "/api/tools/**",
                                 "/swagger-ui/**",
+                                "/api/runtime/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/actuator/health"

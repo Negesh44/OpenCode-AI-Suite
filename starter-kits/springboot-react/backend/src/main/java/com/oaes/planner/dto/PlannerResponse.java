@@ -1,5 +1,6 @@
-package com.oaes.agent.planner.model;
+package com.oaes.planner.dto;
 
+import com.oaes.planner.model.PlannerResult;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,12 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlanStep {
+public class PlannerResponse {
 
-    private int step;
-
-    private String title;
-
-    private String description;
+    private PlannerResult plan;
 
 }

@@ -1,4 +1,4 @@
-package com.oaes.tool.dto;
+package com.oaes.planner.model;
 
 import com.oaes.tool.enums.ToolType;
 import lombok.AllArgsConstructor;
@@ -6,25 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
-import java.util.UUID;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToolRequest {
+public class PlannerTask {
+
+    private int step;
+
+    private String description;
 
     private ToolType tool;
 
     private String action;
 
-    private UUID workspaceId;
-
     private String path;
 
     private String content;
-
-    private Map<String, Object> parameters;
 
 }

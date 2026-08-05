@@ -50,3 +50,6 @@ logging:
 ollama:
   url: http://localhost:11434/api/chat
   model: qwen3:8b
+
+storage:
+  workspace-root: D:/OAES/Workspaces

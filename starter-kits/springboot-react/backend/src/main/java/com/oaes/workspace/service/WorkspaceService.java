@@ -1,6 +1,7 @@
 package com.oaes.workspace.service;
 
 import com.oaes.exception.ResourceNotFoundException;
+import com.oaes.storage.service.WorkspaceStorageService;
 import com.oaes.workspace.dto.WorkspaceRequest;
 import com.oaes.workspace.dto.WorkspaceResponse;
 import com.oaes.workspace.entity.Workspace;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class WorkspaceService {
 
     private final WorkspaceRepository workspaceRepository;
+    private final WorkspaceStorageService workspaceStorageService;
 
     public WorkspaceResponse createWorkspace(WorkspaceRequest request) {
 
@@ -28,6 +30,20 @@ public class WorkspaceService {
                 .build();
 
         workspace = workspaceRepository.save(workspace);
+
+        try {
+
+            workspaceStorageService.initializeWorkspace(workspace);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            throw new RuntimeException(
+                    "Failed to initialize workspace: " + e.getMessage(),
+                    e
+            );
+        }
 
         return map(workspace);
     }

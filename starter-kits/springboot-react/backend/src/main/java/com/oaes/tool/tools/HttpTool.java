@@ -6,6 +6,8 @@ import com.oaes.tool.enums.ToolType;
 import com.oaes.tool.service.Tool;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class HttpTool implements Tool {
 
@@ -19,7 +21,9 @@ public class HttpTool implements Tool {
 
         return ToolResponse.builder()
                 .success(true)
-                .result("HTTP Tool Ready")
+                .message("HTTP Tool Initialized")
+                .data(null)
+                .timestamp(LocalDateTime.now())
                 .build();
 
     }

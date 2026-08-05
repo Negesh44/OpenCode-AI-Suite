@@ -1,8 +1,8 @@
-package com.oaes.agent.planner.controller;
+package com.oaes.planner.controller;
 
-import com.oaes.agent.planner.dto.PlannerRequest;
-import com.oaes.agent.planner.dto.PlannerResponse;
-import com.oaes.agent.planner.service.PlannerService;
+import com.oaes.planner.dto.PlannerRequest;
+import com.oaes.planner.dto.PlannerResponse;
+import com.oaes.planner.service.PlannerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

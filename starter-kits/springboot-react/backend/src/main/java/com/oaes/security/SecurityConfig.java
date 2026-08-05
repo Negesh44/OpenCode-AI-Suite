@@ -31,22 +31,26 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/auth/**",
-                                "/api/agent/**",
-                                "/api/conversations/**",
-                                "/api/planner/**",
-                                "/api/workspaces/**",
-                                "/api/tools/**",
-                                "/swagger-ui/**",
-                                "/api/runtime/**",
-                                "/swagger-ui.html",
-                                "/v3/api-docs/**",
-                                "/actuator/health"
-                        ).permitAll()
+        .requestMatchers(
+                "/api/auth/**",
+                "/api/agent/**",
+                "/api/conversations/**",
+                "/api/planner/**",
+                "/api/workspaces/**",
+                "/api/tools/**",
+                "/api/runtime/**",
+                "/api/git/**",
+                "/api/build/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/api/runtime/events",
+                "/v3/api-docs/**",
+                "/v3/api-docs/swagger-config",
+                "/actuator/health"
+        ).permitAll()
 
-                        .anyRequest().authenticated()
-                )
+        .anyRequest().authenticated()
+)
 
                 .addFilterBefore(
                         jwtAuthenticationFilter,

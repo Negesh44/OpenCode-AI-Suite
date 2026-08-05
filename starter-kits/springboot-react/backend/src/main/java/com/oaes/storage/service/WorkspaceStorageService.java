@@ -26,21 +26,48 @@ public class WorkspaceStorageService {
                         new ResourceNotFoundException("Workspace not found"));
 
         String folderName =
-                workspace.getName().replaceAll("[^a-zA-Z0-9-_]", "_")
+                workspace.getName()
+                        .replaceAll("[^a-zA-Z0-9-_]", "_")
                         + "-"
                         + workspace.getId();
 
         return Path.of(
                 properties.getWorkspaceRoot(),
                 folderName
-        );
+        ).toAbsolutePath().normalize();
     }
 
     public Path resolvePath(UUID workspaceId, String relativePath) {
 
+        if (relativePath == null || relativePath.isBlank()) {
+            throw new RuntimeException("File path cannot be empty.");
+        }
+
+        // Convert Windows separators
+        relativePath = relativePath.replace("\\", "/");
+
+        // Remove leading slashes
+        while (relativePath.startsWith("/")) {
+            relativePath = relativePath.substring(1);
+        }
+
+        // Block path traversal
+        if (relativePath.contains("..")) {
+            throw new RuntimeException("Invalid path.");
+        }
+
         Path root = getWorkspaceRoot(workspaceId);
 
-        Path resolved = root.resolve(relativePath).normalize();
+        Path resolved = root
+                .resolve(relativePath)
+                .normalize()
+                .toAbsolutePath();
+
+        System.out.println("==================================");
+        System.out.println("Workspace Root : " + root);
+        System.out.println("Relative Path  : " + relativePath);
+        System.out.println("Resolved Path  : " + resolved);
+        System.out.println("==================================");
 
         if (!resolved.startsWith(root)) {
             throw new RuntimeException("Access outside workspace is not allowed.");
@@ -55,7 +82,6 @@ public class WorkspaceStorageService {
         Path root = getWorkspaceRoot(workspace.getId());
 
         Files.createDirectories(root);
-
         Files.createDirectories(root.resolve("backend"));
         Files.createDirectories(root.resolve("frontend"));
         Files.createDirectories(root.resolve("docs"));
@@ -69,9 +95,6 @@ public class WorkspaceStorageService {
                     readme,
                     "# " + workspace.getName() + "\n\nCreated by OAES.\n"
             );
-
         }
-
     }
-
 }

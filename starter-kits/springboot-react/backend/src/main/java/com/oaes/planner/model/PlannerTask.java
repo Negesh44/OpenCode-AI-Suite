@@ -24,4 +24,6 @@ public class PlannerTask {
 
     private String content;
 
+    private String instruction;
+
 }

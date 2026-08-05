@@ -88,6 +88,17 @@ public class FileTool implements Tool {
                             content
                     );
                 }
+                case UPDATE -> {
+
+    if (file.getParent() != null) {
+        Files.createDirectories(file.getParent());
+    }
+
+    Files.writeString(file, request.getContent());
+
+    return success("File updated.", file.toString());
+
+}
 
                 case DELETE -> {
 

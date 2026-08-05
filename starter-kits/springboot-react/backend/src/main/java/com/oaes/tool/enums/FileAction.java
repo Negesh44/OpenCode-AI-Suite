@@ -5,6 +5,7 @@ public enum FileAction {
     CREATE,
     READ,
     WRITE,
+    UPDATE,
     DELETE,
     LIST
 

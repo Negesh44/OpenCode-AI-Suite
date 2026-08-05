@@ -1,8 +1,8 @@
-package com.oaes.planner.service;
+package com.oaes.agent.planner.service;
 
-import com.oaes.planner.dto.PlannerRequest;
-import com.oaes.planner.model.ExecutionPlan;
-import com.oaes.planner.model.PlanStep;
+import com.oaes.agent.planner.dto.PlannerRequest;
+import com.oaes.agent.planner.model.ExecutionPlan;
+import com.oaes.agent.planner.model.PlanStep;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

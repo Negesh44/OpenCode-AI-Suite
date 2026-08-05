@@ -1,4 +1,4 @@
-package com.oaes.planner.dto;
+package com.oaes.agent.planner.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package com.oaes.planner.dto;
+package com.oaes.agent.planner.dto;
 
-import com.oaes.planner.model.ExecutionPlan;
+import com.oaes.agent.planner.model.ExecutionPlan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

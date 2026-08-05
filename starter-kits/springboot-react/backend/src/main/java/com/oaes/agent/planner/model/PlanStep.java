@@ -1,4 +1,4 @@
-package com.oaes.planner.model;
+package com.oaes.agent.planner.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

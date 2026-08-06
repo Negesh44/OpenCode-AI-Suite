@@ -1,5 +1,4 @@
 spring:
-
   application:
     name: oaes-backend
 
@@ -12,19 +11,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
     show-sql: true
-
     open-in-view: false
-
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-  jackson:
-    serialization:
-      INDENT_OUTPUT: true
 
 server:
   port: 8080
@@ -36,7 +27,6 @@ jwt:
 springdoc:
   api-docs:
     path: /v3/api-docs
-
   swagger-ui:
     path: /swagger-ui.html
 
@@ -47,9 +37,13 @@ logging:
     org.hibernate.SQL: DEBUG
     com.oaes: DEBUG
 
+storage:
+  workspace-root: D:/OAES/Workspaces
+
+gemini:
+  api-key: AIzaSyBKoTHjmB9CFAj5oUT0HSRvtLcaVev1R64
+  model: gemini-flash-latest
+
 ollama:
   url: http://localhost:11434/api/chat
   model: qwen3:8b
-
-storage:
-  workspace-root: D:/OAES/Workspaces

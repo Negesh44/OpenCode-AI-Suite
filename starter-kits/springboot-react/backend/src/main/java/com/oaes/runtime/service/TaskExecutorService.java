@@ -15,16 +15,20 @@ public class TaskExecutorService {
 
     private final ToolExecutor toolExecutor;
 
-    public ToolResponse execute(UUID workspaceId,
-                                PlannerTask task) {
+    public ToolResponse execute(
+            UUID workspaceId,
+            PlannerTask task
+    ) {
 
-        ToolRequest request = ToolRequest.builder()
-                .tool(task.getTool())
-                .action(task.getAction())
-                .workspaceId(workspaceId)
-                .path(task.getPath())
-                .content(task.getContent())
-                .build();
+        ToolRequest request =
+                ToolRequest.builder()
+                        .tool(task.getTool())
+                        .action(task.getAction())
+                        .workspaceId(workspaceId)
+                        .path(task.getPath())
+                        .content(task.getContent())
+                        .command(task.getCommand())
+                        .build();
 
         return toolExecutor.execute(request);
 

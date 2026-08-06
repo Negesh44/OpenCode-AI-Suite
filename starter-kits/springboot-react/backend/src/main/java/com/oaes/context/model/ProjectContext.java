@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @Data
 @Builder
@@ -13,8 +13,21 @@ import java.util.Map;
 @AllArgsConstructor
 public class ProjectContext {
 
-    private String workspaceName;
+    private String projectName;
 
-    private Map<String, String> files;
+    private String packageName;
 
+    private List<String> controllers;
+
+    private List<String> services;
+
+    private List<String> repositories;
+
+    private List<String> entities;
+
+    private List<String> dtos;
+
+    private List<String> configs;
+
+    private List<String> files;
 }

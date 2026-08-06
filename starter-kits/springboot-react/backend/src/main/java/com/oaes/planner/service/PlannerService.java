@@ -1,38 +1,76 @@
 package com.oaes.planner.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oaes.llm.service.LlmService;
 import com.oaes.planner.dto.PlannerRequest;
 import com.oaes.planner.model.PlannerResult;
-import com.oaes.planner.model.PlannerTask;
-import com.oaes.tool.enums.ToolType;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PlannerService {
 
+    private final LlmService llmService;
+    private final ObjectMapper objectMapper;
+
+    public PlannerService(LlmService llmService) {
+        this.llmService = llmService;
+        this.objectMapper = new ObjectMapper();
+    }
+
     public PlannerResult createPlan(PlannerRequest request) {
 
-        PlannerTask createReadme = PlannerTask.builder()
-                .step(1)
-                .description("Create README file")
-                .tool(ToolType.FILE)
-                .action("CREATE")
-                .path("README.md")
-                .build();
+        String prompt = """
+You are an expert software architect.
 
-        PlannerTask writeReadme = PlannerTask.builder()
-                .step(2)
-                .description("Write README content")
-                .tool(ToolType.FILE)
-                .action("WRITE")
-                .path("README.md")
-                .content("# " + request.getGoal())
-                .build();
+Generate ONLY valid JSON.
 
-        return PlannerResult.builder()
-                .goal(request.getGoal())
-                .tasks(List.of(createReadme, writeReadme))
-                .build();
+Do NOT include markdown.
+Do NOT include ```json.
+Do NOT include explanations.
+
+Return EXACTLY this structure:
+
+{
+  "goal": "string",
+  "tasks": [
+    {
+      "step": 1,
+      "description": "string",
+      "tool": "FILE",
+      "action": "CREATE",
+      "path": "README.md",
+      "content": "optional",
+      "command": "",
+      "instruction": ""
+    }
+  ]
+}
+
+Available tool values:
+FILE
+TERMINAL
+GIT
+BROWSER
+
+Goal:
+%s
+""".formatted(request.getGoal());
+
+        try {
+
+            String response = llmService.generate(prompt);
+
+            System.out.println("========== GEMINI RESPONSE ==========");
+            System.out.println(response);
+            System.out.println("=====================================");
+
+            return objectMapper.readValue(
+                    response,
+                    PlannerResult.class
+            );
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

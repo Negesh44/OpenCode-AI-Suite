@@ -1,8 +1,17 @@
 package com.oaes.runtime.service;
+import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
+import org.springframework.stereotype.Service;
+import com.oaes.context.model.ProjectContext;
 import com.oaes.build.dto.BuildResult;
 import com.oaes.build.service.BuildRepairService;
 import com.oaes.coder.service.CodeGenerationService;
+import com.oaes.memory.model.ProjectFile;
+import com.oaes.memory.service.ProjectMemoryService;
+import com.oaes.memory.service.ProjectRetrieverService;
+import com.oaes.context.service.ProjectContextService;
 import com.oaes.editor.dto.EditRequest;
 import com.oaes.editor.service.CodeEditorService;
 import com.oaes.git.service.GitAutomationService;
@@ -14,13 +23,12 @@ import com.oaes.planner.service.PlannerService;
 import com.oaes.runtime.dto.AgentRequest;
 import com.oaes.runtime.dto.AgentResponse;
 import com.oaes.storage.service.WorkspaceStorageService;
+
 import com.oaes.tool.dto.ToolResponse;
 import com.oaes.tool.enums.ToolType;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.oaes.reviewer.service.ReviewService;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +38,15 @@ public class AgentRuntime {
     private final PlannerService plannerService;
     private final TaskExecutorService taskExecutorService;
     private final CodeGenerationService codeGenerationService;
+    private final ReviewService reviewService;
     private final CodeEditorService codeEditorService;
+    private final ProjectContextService projectContextService;
     private final WorkspaceStorageService workspaceStorageService;
     private final GitAutomationService gitAutomationService;
     private final BuildRepairService buildRepairService;
     private final AgentProgressService progressService;
+    private final ProjectMemoryService projectMemoryService;
+    private final ProjectRetrieverService projectRetrieverService;
 
     public AgentResponse run(AgentRequest request) {
 
@@ -75,18 +87,109 @@ public class AgentRuntime {
                     20
             );
         }
+        progressService.publish(
+        "CONTEXT",
+        "Scanning workspace...",
+        25
+);
 
+ProjectContext context;
+
+try {
+
+    context = projectContextService.build(
+            request.getWorkspaceId()
+    );
+
+    progressService.publish(
+            "CONTEXT",
+            "Workspace scanned.",
+            30
+    );
+
+} catch (Exception e) {
+
+    e.printStackTrace();
+
+    context = ProjectContext.builder().build();
+
+    progressService.publish(
+            "CONTEXT",
+            "Workspace scan failed.",
+            30
+    );
+}
+
+progressService.publish(
+        "MEMORY",
+        "Finding relevant project files...",
+        35
+);
+
+List<String> relevantFiles =
+        projectRetrieverService.retrieve(
+                context.getFiles(),
+                request.getGoal()
+        );
+      
+
+progressService.publish(
+        "MEMORY",
+        relevantFiles.size() + " files selected.",
+        38
+);
+
+
+
+progressService.publish(
+        "MEMORY",
+        "Loading project files...",
+        40
+);
+
+List<ProjectFile> memory;
+
+try {
+
+    memory = projectMemoryService.load(
+            request.getWorkspaceId()
+    );
+
+} catch (Exception e) {
+
+    memory = List.of();
+
+}
+
+progressService.publish(
+        "MEMORY",
+        "Project memory ready.",
+        45
+);
+List<ProjectFile> relevantMemory =
+        memory.stream()
+                .filter(file ->
+                        relevantFiles.contains(file.getPath()))
+                .toList();
         StringBuilder output = new StringBuilder();
 
         output.append("========== EXECUTING PLAN ==========\n");
 
         for (PlannerTask task : plan.getTasks()) {
 
-            progressService.publish(
-                    "TASK",
-                    "Executing " + task.getPath(),
-                    40
-            );
+           String target = task.getPath();
+
+if (target == null || target.isBlank()) {
+    target = task.getCommand();
+}
+
+progressService.publish(
+        "TASK",
+        "Executing " + target,
+        40
+
+);
+
 
             try {
 
@@ -96,13 +199,44 @@ public class AgentRuntime {
                     if (task.getContent() == null ||
                             task.getContent().isBlank()) {
 
-                        String generatedCode =
-                                codeGenerationService.generate(
-                                        task.getPath(),
-                                        task.getDescription()
-                                );
+                  String generatedCode =
+        codeGenerationService.generate(
+        task.getPath(),
+        task.getDescription(),
+        context,
+        relevantFiles,
+        relevantMemory
+);   
+if (generatedCode != null &&
+        !generatedCode.isBlank()) {
 
-                        task.setContent(generatedCode);
+    progressService.publish(
+            "REVIEW",
+            "Reviewing " + task.getPath(),
+            45
+    );
+generatedCode =
+       reviewService.review(
+        task.getPath(),
+        generatedCode,
+        context,
+        relevantFiles,
+        relevantMemory
+);
+
+    progressService.publish(
+            "REVIEW",
+            "Review completed.",
+            48
+    );
+
+} else {
+
+    generatedCode = "";
+
+}
+
+task.setContent(generatedCode);
                     }
                 }
 
@@ -128,10 +262,39 @@ public class AgentRuntime {
                                     .instruction(task.getInstruction())
                                     .build();
 
-                    String updatedCode =
-                            codeEditorService.edit(editRequest);
+                 String updatedCode =
+        codeEditorService.edit(editRequest);
 
-                    task.setContent(updatedCode);
+if (updatedCode != null &&
+        !updatedCode.isBlank()) {
+
+    progressService.publish(
+            "REVIEW",
+            "Reviewing updated file " + task.getPath(),
+            50
+    );
+
+updatedCode =
+       reviewService.review(
+        task.getPath(),
+        updatedCode,
+        context,
+        relevantFiles,
+        relevantMemory
+);
+    progressService.publish(
+            "REVIEW",
+            "Review completed.",
+            55
+    );
+
+} else {
+
+    updatedCode = currentCode;
+
+}
+
+task.setContent(updatedCode);
                 }
 
                 ToolResponse response =
@@ -144,10 +307,21 @@ public class AgentRuntime {
                         .append(". ")
                         .append(response.getMessage())
                         .append("\n");
+                        progressService.publish(
+        "TASK",
+        "Completed " + task.getStep(),
+        60
+);
 
             } catch (Exception ex) {
 
+
                 ex.printStackTrace();
+                progressService.publish(
+        "ERROR",
+        ex.getMessage(),
+        60
+);
 
                 output.append(task.getStep())
                         .append(". ERROR : ")
@@ -191,13 +365,35 @@ public class AgentRuntime {
                 );
 
                 output.append("✅ Git commit completed.\n");
+                progressService.publish(
+        "GIT",
+        "Git Commit Completed",
+        98
+);
+progressService.publish(
+        "DONE",
+        "Project Completed",
+        100
+);
 
             } catch (Exception e) {
+                e.printStackTrace();
+    progressService.publish(
+            "GIT",
+            "Git Commit Failed",
+            98
+    );
 
-                output.append("⚠ Git commit failed : ")
-                        .append(e.getMessage())
-                        .append("\n");
-            }
+    progressService.publish(
+            "DONE",
+            "Completed (Git Commit Failed)",
+            100
+    );
+
+    output.append("⚠ Git commit failed : ")
+            .append(e.getMessage())
+            .append("\n");
+}
 
         } else {
 
@@ -206,16 +402,16 @@ public class AgentRuntime {
                     "Build Failed",
                     90
             );
-
+            progressService.publish(
+        "DONE",
+        "Execution Finished With Errors",
+        100
+);
             output.append("❌ BUILD FAILED\n");
             output.append(buildResult.getErrors());
         }
 
-        progressService.publish(
-                "DONE",
-                "Project Completed",
-                100
-        );
+        
 
         output.append("\n========== FINISHED ==========\n");
 

@@ -15,13 +15,14 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class ProjectContextService {
+public class WorkspaceContextService {
 
-    private final WorkspaceStorageService storageService;
+    private final WorkspaceStorageService workspaceStorageService;
 
     public ProjectContext build(UUID workspaceId) throws IOException {
 
-        Path root = storageService.getWorkspaceRoot(workspaceId);
+        Path root =
+                workspaceStorageService.getWorkspaceRoot(workspaceId);
 
         List<String> controllers = new ArrayList<>();
         List<String> services = new ArrayList<>();
@@ -31,8 +32,6 @@ public class ProjectContextService {
         List<String> configs = new ArrayList<>();
         List<String> files = new ArrayList<>();
 
-        final String[] packageName = {""};
-
         try (Stream<Path> stream = Files.walk(root)) {
 
             stream.filter(Files::isRegularFile)
@@ -41,25 +40,6 @@ public class ProjectContextService {
                         String name = path.getFileName().toString();
 
                         files.add(root.relativize(path).toString());
-
-                        if (packageName[0].isEmpty() && name.endsWith(".java")) {
-
-                            try {
-
-                                Files.lines(path)
-                                        .filter(line -> line.startsWith("package "))
-                                        .findFirst()
-                                        .ifPresent(pkg ->
-                                                packageName[0] = pkg
-                                                        .replace("package", "")
-                                                        .replace(";", "")
-                                                        .trim()
-                                        );
-
-                            } catch (IOException ignored) {
-                            }
-
-                        }
 
                         if (name.endsWith("Controller.java")) {
                             controllers.add(name);
@@ -91,7 +71,6 @@ public class ProjectContextService {
 
         return ProjectContext.builder()
                 .projectName(root.getFileName().toString())
-                .packageName(packageName[0])
                 .controllers(controllers)
                 .services(services)
                 .repositories(repositories)
@@ -101,4 +80,5 @@ public class ProjectContextService {
                 .files(files)
                 .build();
     }
+
 }

@@ -25,6 +25,8 @@ public class ToolRequest {
 
     private String content;
 
+    private String command;
+
     private Map<String, Object> parameters;
 
 }

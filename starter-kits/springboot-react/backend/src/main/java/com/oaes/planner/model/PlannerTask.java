@@ -24,6 +24,10 @@ public class PlannerTask {
 
     private String content;
 
+    // Required by AgentRuntime
+    private String command;
+
+    // Required by Generator
     private String instruction;
 
 }
